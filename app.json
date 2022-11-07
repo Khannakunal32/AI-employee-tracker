@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "Bractance",
+    "slug": "Bractus",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/logo.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#A983B2"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/logo.png",
+        "backgroundColor": "#8535b1"
+        
+      },
+      "googleServicesFile": "./google-services.json",
+      "package": "com.bractus.bractance",
+      "useNextNotificationsApi":true
+     
+    },
+    
+    "web": {
+      "favicon": "./assets/images/logo.png"
+    }
+  }
+}
