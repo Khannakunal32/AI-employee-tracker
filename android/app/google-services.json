@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "170368326132",
+    "project_id": "megahoot-a0d47",
+    "storage_bucket": "megahoot-a0d47.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:170368326132:android:7171d8abfa67d5b29501a1",
+        "android_client_info": {
+          "package_name": "com.messenger.megahoot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "170368326132-emf5im1vbet9nvogcicqc94res01tfpu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAs-BJ3srPoImWsUieWii4WYay8ABt402g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "170368326132-emf5im1vbet9nvogcicqc94res01tfpu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -67,7 +67,7 @@ export default function MainTabNavigator() {
   
       />
         <MainTab.Screen
-        name="Missing Child"
+        name="Profile Login"
         component={missingChildScreen}
       />
        {/* <MainTab.Screen
