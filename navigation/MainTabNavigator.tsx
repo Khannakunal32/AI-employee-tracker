@@ -56,20 +56,20 @@ export default function MainTabNavigator() {
         component={GeofenceScreen}
   
       />
-      <MainTab.Screen
+      {/* <MainTab.Screen
         name="Manager"
         component={ChatScreen}
       
-      />
+      /> */}
         <MainTab.Screen
         name="Events"
         component={Events}
   
       />
-        <MainTab.Screen
+        {/* <MainTab.Screen
         name="Profile Login"
         component={missingChildScreen}
-      />
+      /> */}
        {/* <MainTab.Screen
         name="Attendence"
         component={Attendence}

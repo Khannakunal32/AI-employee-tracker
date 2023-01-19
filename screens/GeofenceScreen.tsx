@@ -1,75 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import { Platform, Text, View, StyleSheet , BackHandler} from 'react-native';
-import Constants from 'expo-constants';
-import * as Location from 'expo-location';
+import React, { useEffect, useState } from "react";
+import { BackHandler, Button, StyleSheet, Text, View } from "react-native";
+import * as Location from "expo-location";
+import * as Notifications from "expo-notifications";
+import { LocationGeofencingEventType } from "expo-location";
+import * as TaskManager from "expo-task-manager";
+import * as Permissions from "expo-permissions";
+import { createStackNavigator } from "@react-navigation/stack";
+import { useNavigation } from "@react-navigation/native";
+import LoginScreenAttendace from "./LoginScreenAttendance";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import GeofenceCheckScreen from "./GeofenceCheckScreen";
+import Colors from '../constants/Colors'
+
+// const Stackk= createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function GeofenceScreen() {
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-
-  useEffect(() => {
-    (async () => {
-      if (Platform.OS === 'android' && !Constants.isDevice) {
-        setErrorMsg(
-          'Oops, this will not work on Snack in an Android emulator. Try it on your device!'
-        );
-        return;
-      }
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-    })();
-  }, []);
-
-  let text = 'Waiting..';
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
-    var longitude= location.coords.longitude;
-    var latitude= location.coords.latitude;
-    var speed= location.coords.speed;
-    var accuracy= location.coords.accuracy;
-    var mock= "false";
-    console.log(location.mocked);
-    // alert("Elegible :)");
-  }
-
-  if(location && location.mocked=== true){  alert("mocklocation detected");
-  mock= "true";
-  setTimeout(() => {
-    BackHandler.exitApp();
-    }, 2000);
-};
-
   return (
-    <View style={styles.container}>
-      {/* <Text style={styles.paragraph}>{text}</Text> */}
-      <Text >mock: {mock}</Text> 
-      <Text >longitude: {longitude} </Text> 
-      {/* <Text>mockStatus: {location.mocked}</Text> */}
-      <Text>latitude: {latitude}</Text>
-      <Text >accuracy: {accuracy}</Text> 
-      <Text >speed: {speed}</Text> 
-
-    </View>
+    <Stack.Navigator
+      initialRouteName="GeofenceCheckScreen"
+      screenOptions={{ headerShown: false }}
+    >
+      {/* <Stack.Navigator initialRouteName="LoginScreenAttendance"> */}
+      <Stack.Screen
+        name="GeofenceCheckScreen"
+        component={GeofenceCheckScreen}
+      ></Stack.Screen>
+      <Stack.Screen
+        name="LoginScreenAttendance"
+        component={LoginScreenAttendace}
+      ></Stack.Screen>
+    </Stack.Navigator>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  paragraph: {
-    fontSize: 18,
-    textAlign: 'center',
+    // backgroundColor: "#fff",
+    backgroundColor: Colors.light.background,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

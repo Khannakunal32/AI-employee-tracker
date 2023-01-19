@@ -29,9 +29,7 @@
         
       },
       "googleServicesFile": "./google-services.json",
-      "package": "com.bractus.bractance",
-      "useNextNotificationsApi":true
-     
+      "package": "com.bractus.bractance"
     },
     
     "web": {
@@ -39,3 +37,6 @@
     }
   }
 }
+
+// add above permission in androi
+// "useNextNotificationsApi":true,

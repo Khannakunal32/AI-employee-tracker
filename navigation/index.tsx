@@ -157,7 +157,7 @@ function RootNavigator() {
         component={Attendence}
         // options={{ title: "Oops!" }}
       />
-     
+
       <Stack.Screen
         name="SignIn"
         component={SignInScreen}
@@ -166,7 +166,10 @@ function RootNavigator() {
         })}
       />
       <Stack.Screen name="CameraScreen" component={CameraScreen} />
-      <Stack.Screen name="CameraScreenMissingChild" component={CameraScreenMissingChild} />
+      <Stack.Screen
+        name="CameraScreenMissingChild"
+        component={CameraScreenMissingChild}
+      />
       <Stack.Screen
         name="CallScreen"
         component={CallScreen}
