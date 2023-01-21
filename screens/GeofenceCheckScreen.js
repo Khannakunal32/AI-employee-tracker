@@ -58,7 +58,7 @@ export default function GeofenceCheckScreen() {
             region.identifier +
             " attendance will not be marked!"
         );
-        _askPermission();
+         _askPermission();
         alert("You've left region: ", region.identifier);
         Notifications.scheduleNotificationAsync({
           content: {
@@ -142,14 +142,22 @@ export default function GeofenceCheckScreen() {
         //   notifyOnEnter: true,
         //   notifyOnExit: true,
         // },
+        // {
+        //   identifier: "HOME",
+        //   latitude: 28.705564,
+        //   longitude: 77.1206821,
+        //   radius: 100,
+        //   notifyOnEnter: true,
+        //   notifyOnExit: true,
+        // },
         {
-          identifier: "HOME",
-          latitude: 28.705564,
-          longitude: 77.1206821,
+          identifier: "COLLEGE",
+          latitude: 28.7370735,
+          longitude: 77.1129645,
           radius: 100,
           notifyOnEnter: true,
           notifyOnExit: true,
-        },
+        }
       ];
       await Location.startGeofencingAsync("GEOFENCE_TASK", geofences);
     })();
