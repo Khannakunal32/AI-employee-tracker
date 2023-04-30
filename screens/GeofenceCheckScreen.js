@@ -4,7 +4,6 @@ import * as Location from "expo-location";
 import * as Notifications from "expo-notifications";
 import { LocationGeofencingEventType } from "expo-location";
 import * as TaskManager from "expo-task-manager";
-import * as Permissions from "expo-permissions";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 
@@ -109,13 +108,13 @@ export default function GeofenceCheckScreen() {
 
   useEffect(() => {
     (async () => {
-      const { granted: notificationsGranted } =
-        await Notifications.getPermissionsAsync();
-      if (!notificationsGranted) {
-        await Notifications.requestPermissionsAsync();
-      }
-
-      await Permissions.askAsync(Permissions.LOCATION_BACKGROUND);
+      // const { granted: notificationsGranted } =
+      //   await Notifications.getPermissionsAsync();
+      // if (!notificationsGranted) {
+      //   await Notifications.requestPermissionsAsync();
+      // }
+      // await Permissions.askAsync(Permissions.LOCATION_BACKGROUND);
+      Location.requestBackgroundPermissionsAsync();
       const { granted: fgGranted } =
         await Location.getForegroundPermissionsAsync();
 
@@ -142,22 +141,22 @@ export default function GeofenceCheckScreen() {
         //   notifyOnEnter: true,
         //   notifyOnExit: true,
         // },
-        // {
-        //   identifier: "HOME",
-        //   latitude: 28.705564,
-        //   longitude: 77.1206821,
-        //   radius: 100,
-        //   notifyOnEnter: true,
-        //   notifyOnExit: true,
-        // },
         {
-          identifier: "COLLEGE",
-          latitude: 28.7370735,
-          longitude: 77.1129645,
+          identifier: "HOME",
+          latitude: 28.705564,
+          longitude: 77.1206821,
           radius: 100,
           notifyOnEnter: true,
           notifyOnExit: true,
-        }
+        },
+        // {
+        //   identifier: "COLLEGE",
+        //   latitude: 28.7370735,
+        //   longitude: 77.1129645,
+        //   radius: 100,
+        //   notifyOnEnter: true,
+        //   notifyOnExit: true,
+        // }
       ];
       await Location.startGeofencingAsync("GEOFENCE_TASK", geofences);
     })();

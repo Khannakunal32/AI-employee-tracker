@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { BackHandler, Button, StyleSheet, Text, View } from "react-native";
-import * as Location from "expo-location";
-import * as Notifications from "expo-notifications";
-import { LocationGeofencingEventType } from "expo-location";
-import * as TaskManager from "expo-task-manager";
-import * as Permissions from "expo-permissions";
-import { createStackNavigator } from "@react-navigation/stack";
-import { useNavigation } from "@react-navigation/native";
 import LoginScreenAttendace from "./LoginScreenAttendance";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import GeofenceCheckScreen from "./GeofenceCheckScreen";

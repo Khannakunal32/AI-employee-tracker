@@ -40,7 +40,7 @@ import Attendence from "../screens/Attendence";
 import CallScreen from "../screens/callScreen";
 import VideoButton from "../components/VideoCallBox";
 import SoapBox from "../screens/soapBox";
-import individualContact from "../screens/individualContact";
+import individualContact from "../screens/IndividualContact";
 import Register from "../screens/Register";
 import SignInKunal from "../screens/SignInScreen";
 import SignInScreen from "../screens/SignInScreen";

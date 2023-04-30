@@ -15,7 +15,7 @@ import axios from 'axios';
 import Colors from "../constants/Colors";
 import { useFocusEffect } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/core";
-export default function individualContact(props) {
+export default function IndividualContact(props) {
    
     console.log(props.route.params.id)
 const [FormVisible, setFormVisible] = useState(false)

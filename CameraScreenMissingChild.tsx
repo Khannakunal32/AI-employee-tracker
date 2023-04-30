@@ -17,9 +17,10 @@ import {
   View,
 } from 'react-native';
 // import { Constants } from 'expo';
-import * as Permissions from 'expo-permissions';
+// import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
+import { Camera } from 'expo-camera';
 export default class App extends Component {
   state = {
     image: null,
@@ -109,11 +110,13 @@ export default class App extends Component {
   _takePhoto = async () => {
     const {
       status: cameraPerm
-    } = await Permissions.askAsync(Permissions.CAMERA);
+    // } = await Permissions.askAsync(Permissions.CAMERA);
+    } = await Camera.requestCameraPermissionsAsync()
 
     const {
       status: cameraRollPerm
-    } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    // } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    } = await ImagePicker.requestMediaLibraryPermissionsAsync()
 
     // only if user allows permission to camera AND camera roll
     if (cameraPerm === 'granted' && cameraRollPerm === 'granted') {
@@ -122,7 +125,7 @@ export default class App extends Component {
         aspect: [4, 3],
       });
 
-      if (!pickerResult.cancelled) {
+      if (!pickerResult.canceled) {
         this.setState({ image: pickerResult.uri });
       }
 
@@ -133,10 +136,11 @@ export default class App extends Component {
   _pickImage = async () => {
     const {
       status: cameraRollPerm
-    } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    // } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    } = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     // only if user allows permission to camera roll
-    if (cameraRollPerm === 'granted') {
+    if(cameraRollPerm === 'granted') {
       let pickerResult = await ImagePicker.launchImageLibraryAsync({
         allowsEditing: true,
         base64: true,
@@ -144,7 +148,7 @@ export default class App extends Component {
       });
 
 
-      if (!pickerResult.cancelled) {
+      if (!pickerResult.canceled) {
         this.setState({ image: pickerResult.uri});
       }
 
