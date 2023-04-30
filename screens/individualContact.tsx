@@ -169,7 +169,7 @@ const clickedAt=()=>{
         email:email
       })
       .then((res) => {
-      console.info(res.data.data.privateKey,res.data.data.firstName,res.data.data.lastName)
+      // console.info(res.data.data.privateKey,res.data.data.firstName,res.data.data.lastName)
       //  setFormVisible(!FormVisible)
       setSCname(res.data.data.firstName+" "+res.data.data.lastName)
       setSCveroKey(res.data.data.privateKey)

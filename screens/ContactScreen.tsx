@@ -93,11 +93,11 @@ const [FormVisible, setFormVisible] = useState(false)
            const contactParse = JSON.parse(userData.data.data.contact)
           //  contactParse.forEach((contact) => users.push(contact))
        
-           console.log(userData.data.data,users)
+          //  console.log(userData.data.data,users)
           setUsers(contactParse)
           
         global.contacts=userData.data.data.contact
-        console.log(global.contacts,"8686")
+        // console.log(global.contacts,"8686")
          
         } catch (e){
           console.log(e)
@@ -138,7 +138,7 @@ const [FormVisible, setFormVisible] = useState(false)
         email:email
       })
       .then((res) => {
-      console.info(res.data.data.privateKey,res.data.data.firstName,res.data.data.lastName)
+      // console.info(res.data.data.privateKey,res.data.data.firstName,res.data.data.lastName)
       // console.log(res.data.data.ProfilePic)
       //  setFormVisible(!FormVisible)
       setSCname(res.data.data.firstName+" "+res.data.data.lastName)

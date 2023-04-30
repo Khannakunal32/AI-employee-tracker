@@ -583,7 +583,7 @@ stopRecording()
       
     });
 
-    if (!result.cancelled) {
+    if (!result.canceled) {
       setImage(result.uri);
       setUploadLoading(true)
 
@@ -661,7 +661,7 @@ stopRecording()
       base64: true,
     });
 
-    if (!result.cancelled) {
+    if (!result.canceled) {
       setImage(result.uri);
       setUploadLoading(true)
       let apiUrl = 'https://api.fortisab.com/upload';

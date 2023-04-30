@@ -1,7 +1,7 @@
 import React from 'react'
 import { View,Text,Image, FlatList , StyleSheet} from 'react-native'
 
-import {Camera} from 'expo-camera';
+import {Camera, CameraType} from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
 
 
@@ -57,7 +57,8 @@ function getFaceDataView() {
     return (
 
         <Camera 
-      type={Camera.Constants.Type.front}
+      // type={Camera.Constants.Type.front}
+      type={CameraType.front}
       style={styles.camera}
       onFacesDetected={handleFacesDetected}
       >

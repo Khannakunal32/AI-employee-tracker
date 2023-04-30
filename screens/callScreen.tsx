@@ -32,7 +32,7 @@ export default function CallScreen() {
 //       // Explore the result
 //       console.log(result);
   
-//       if (!result.cancelled) {
+//       if (!result.canceled) {
       
 //         console.log('success');
      
@@ -50,7 +50,7 @@ export default function CallScreen() {
     
 //       // console.log(result);
   
-//       // if (!result.cancelled) {
+//       // if (!result.canceled) {
 //       //   setImage(result.uri);
 //       //   let message = {
 //       //     to:route.params.id,

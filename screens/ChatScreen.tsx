@@ -46,7 +46,7 @@ const notificationListener = useRef();
 const responseListener = useRef();
   const fetUsers=async (name,privateKey)=>{
    
-    console.log(myToken,name)
+    // console.log(myToken,name)
     try{
        const userData= await axios.post('https://messangerapi533cdgf6c556.amaprods.com/api/contact/contact-list/',{
          veroKey:privateKey,
@@ -56,7 +56,7 @@ const responseListener = useRef();
        const contactParse = JSON.parse(userData.data.data.contact)
       //  contactParse.forEach((contact) => users.push(contact))
    
-       console.log(userData.data.data,users)
+      //  console.log(userData.data.data,users)
       setUsers(contactParse)
       setData(contactParse)
       setFullData(contactParse)
@@ -78,7 +78,7 @@ const responseListener = useRef();
     );
     if (tokenFromPersistentState) {
       let data = JSON.parse(tokenFromPersistentState)
-      console.log(data.firstName)
+      // console.log(data.firstName)
       let name=data.firstName+" "+data.lastName
       let privateKey= data.privateKey
      setMyToken(data)

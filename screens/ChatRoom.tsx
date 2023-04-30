@@ -59,11 +59,10 @@ const ChatRoomScreen = () => {
   const [promptVisible, setpromptVisible] = useState(false);
   const [showPromptPurge, setshowPromptPurge] = useState(false);
   const [showPromptDelete, setshowPromptDelete] = useState(false);
-  const [DeleteId, setDeleteId] = useState('');
-  
-  const [promptMessage, setpromptMessage] = useState('');
-  
-  
+  const [DeleteId, setDeleteId] = useState("");
+
+  const [promptMessage, setpromptMessage] = useState("");
+
   const [TempimageUri, setTempimageUri] = useState("");
 
   // useEffect(() => {
@@ -101,11 +100,13 @@ const ChatRoomScreen = () => {
         }
       )
       .then((res) => {
-        // console.log(res.data.message[0]);
+        console.log(
+          route.params.id + "....." + global.privateKey + "heloooo......"
+        );
         axios
           .post(
             "https://messangerapi533cdgf6c556.amaprods.com/api/users/getLastChatForMe",
-            { RoomAddress:route.params.id+global.privateKey}
+            { RoomAddress: route.params.id + global.privateKey }
           )
           .then((res) => {
             // console.log(res.data.message,"seen chat")
@@ -116,9 +117,8 @@ const ChatRoomScreen = () => {
               )
               .then((res) => {
                 console.log(res.data.message);
-                if(res.data.message[0].seenStatus==1){
- setseenStatus(true)
-// console.log('true')
+                if (res.data.message[0].seenStatus == 1) {
+                  setseenStatus(true);
                 }
               })
               .catch((err) => {
@@ -159,7 +159,7 @@ const ChatRoomScreen = () => {
         console.log(res.data.message[0]);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err, "this is it");
         setchatLoading(false);
       });
   };
@@ -240,33 +240,42 @@ const ChatRoomScreen = () => {
     }
   };
 
-  const purgeHandler=()=>{
-    setMessages((previousState) =>
-    previousState.filter((e) => e== null)
-  );
-    axios.post('https://messangerapi533cdgf6c556.amaprods.com/api/users/purgeChats',{
-      to: route.params.id,
-      from: global.id,
-
-    })
-    .then((res)=>{console.log(res.data)})
-    .catch((err)=>{console.log(err)})
-  }
-  const deleteHandler=(id)=>{
+  const purgeHandler = () => {
+    setMessages((previousState) => previousState.filter((e) => e == null));
+    axios
+      .post(
+        "https://messangerapi533cdgf6c556.amaprods.com/api/users/purgeChats",
+        {
+          to: route.params.id,
+          from: global.id,
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const deleteHandler = (id) => {
     // setshowPromptDelete(true)
 
-    setMessages((previousState) =>
-    previousState.filter((e) => e._id!==id)
-  );
-    axios.post('https://messangerapi533cdgf6c556.amaprods.com/api/users/deleteChats',{
-      id:id
+    setMessages((previousState) => previousState.filter((e) => e._id !== id));
+    axios
+      .post(
+        "https://messangerapi533cdgf6c556.amaprods.com/api/users/deleteChats",
+        {
+          id: id,
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-    })
-    .then((res)=>{console.log(res.data)})
-    .catch((err)=>{console.log(err)})
-  }
-
-  
   const handleDeleteToken = async (key, messageData) => {
     console.log(messageData);
     await SecureStore.deleteItemAsync(key).then;
@@ -371,13 +380,12 @@ const ChatRoomScreen = () => {
             GiftedChat.append(previousMessages, message.data)
           );
 
-          
           socket.emit("message", {
             to: route.params.id,
             from: global.id,
             message: { type: "seen", id: message.data._id },
           });
-         
+
           // handleSetChat(route.params.id,message.data)
           // newItem(messageData)
           // handleSetChat(route.params.id,messageData)
@@ -459,13 +467,13 @@ const ChatRoomScreen = () => {
       },
 
       from: global.id,
-      userName: global.name,
+      // userName: global.name,
       TimerTime: isTimerTime,
       timeoutTime: timeoutTime,
       data: {
         _id: mid,
-        isEphermal:isTimerTime,
-        timeoutTime:timeoutTime,
+        isEphermal: isTimerTime,
+        timeoutTime: timeoutTime,
         text: text,
         createdAt: new Date(),
         sent: seenStatus,
@@ -479,7 +487,7 @@ const ChatRoomScreen = () => {
     };
     console.log(message.TimerTime);
     socket.emit("message", message);
-  
+
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, message.data)
     );
@@ -563,8 +571,8 @@ const ChatRoomScreen = () => {
     setisTimerButton(!isTimerButton);
     setisTimerTime(!isTimerTime);
   };
-  const purgeClicked =()=>{
-    setshowPromptPurge(true)
+  const purgeClicked = () => {
+    setshowPromptPurge(true);
   };
 
   const OnCurrentDate = (data) => {
@@ -732,7 +740,7 @@ const ChatRoomScreen = () => {
       quality: 1,
       base64: true,
     });
-    if (!result.cancelled) {
+    if (!result.canceled) {
       if (result.type == "image") {
         setUploadLoading(true);
         setMessages((previousMessages) =>
@@ -904,7 +912,7 @@ const ChatRoomScreen = () => {
     const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
 
     if (permissionResult.granted === false) {
-      alert("You've refused to allow this appp to access your camera!");
+      alert("You've refused to allow this app to access your camera!");
       return;
     }
 
@@ -915,7 +923,7 @@ const ChatRoomScreen = () => {
       base64: true,
     });
 
-    if (!result.cancelled) {
+    if (!result.canceled) {
       setMessages((previousMessages) =>
         GiftedChat.append(previousMessages, {
           _id: create_UUID(),
@@ -1094,21 +1102,116 @@ const ChatRoomScreen = () => {
             enableSwipeDown
           />
         </Modal>
-       {showPromptPurge?<View style={{justifyContent:'center',position:'absolute',width:'100%',height:100,top:'40%',zIndex:3,backgroundColor:'white'}}><Text style={{textAlign:'center'}}>Do You Want to Purge Everything?</Text><View style={{flexDirection:'row',justifyContent:'space-evenly'}}><TouchableOpacity 
-       onPress={()=>{setshowPromptPurge(false);
-      setpromptMessage('You cancelled');purgeHandler()}}><Text style={{backgroundColor:'green',color:'white',padding:5,borderRadius:5}}>Agree</Text></TouchableOpacity>
-      <TouchableOpacity onPress={()=>{setshowPromptPurge(false) ;
-        setpromptMessage('You cancelled');}}><Text style={{backgroundColor:'red',color:'white',padding:5,borderRadius:5}}>Cancel</Text></TouchableOpacity></View>
-        
-        </View>
-   :null}
-    {showPromptDelete?<View style={{justifyContent:'center',position:'absolute',width:'100%',height:100,top:'40%',zIndex:3,backgroundColor:'white'}}><Text style={{textAlign:'center'}}>Do You Want to Delete This Chat?</Text><View style={{flexDirection:'row',justifyContent:'space-evenly'}}><TouchableOpacity 
-       onPress={()=>{setshowPromptDelete(false);deleteHandler(DeleteId)}}><Text style={{backgroundColor:'green',color:'white',padding:5,borderRadius:5}}>Delete</Text></TouchableOpacity>
-      <TouchableOpacity onPress={()=>{setshowPromptDelete(false) ;
-      }}><Text style={{backgroundColor:'red',color:'white',padding:5,borderRadius:5}}>Cancel</Text></TouchableOpacity></View>
-        
-        </View>
-   :null} 
+        {showPromptPurge ? (
+          <View
+            style={{
+              justifyContent: "center",
+              position: "absolute",
+              width: "100%",
+              height: 100,
+              top: "40%",
+              zIndex: 3,
+              backgroundColor: "white",
+            }}
+          >
+            <Text style={{ textAlign: "center" }}>
+              Do You Want to Purge Everything?
+            </Text>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  setshowPromptPurge(false);
+                  setpromptMessage("You canceled");
+                  purgeHandler();
+                }}
+              >
+                <Text
+                  style={{
+                    backgroundColor: "green",
+                    color: "white",
+                    padding: 5,
+                    borderRadius: 5,
+                  }}
+                >
+                  Agree
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  setshowPromptPurge(false);
+                  setpromptMessage("You canceled");
+                }}
+              >
+                <Text
+                  style={{
+                    backgroundColor: "red",
+                    color: "white",
+                    padding: 5,
+                    borderRadius: 5,
+                  }}
+                >
+                  Cancel
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        ) : null}
+        {showPromptDelete ? (
+          <View
+            style={{
+              justifyContent: "center",
+              position: "absolute",
+              width: "100%",
+              height: 100,
+              top: "40%",
+              zIndex: 3,
+              backgroundColor: "white",
+            }}
+          >
+            <Text style={{ textAlign: "center" }}>
+              Do You Want to Delete This Chat?
+            </Text>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  setshowPromptDelete(false);
+                  deleteHandler(DeleteId);
+                }}
+              >
+                <Text
+                  style={{
+                    backgroundColor: "green",
+                    color: "white",
+                    padding: 5,
+                    borderRadius: 5,
+                  }}
+                >
+                  Delete
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  setshowPromptDelete(false);
+                }}
+              >
+                <Text
+                  style={{
+                    backgroundColor: "red",
+                    color: "white",
+                    padding: 5,
+                    borderRadius: 5,
+                  }}
+                >
+                  Cancel
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        ) : null}
         <GiftedChat
           messages={messages}
           onSend={(messages) => onSend(messages)}
@@ -1118,7 +1221,7 @@ const ChatRoomScreen = () => {
           showAvatarForEveryMessage={true}
           showUserAvatar={true}
           renderTicks={(message) =>
-            message.sent || seenStatus? (
+            message.sent || seenStatus ? (
               <View>
                 <Text style={{ color: "green" }}>✓✓</Text>
               </View>
@@ -1198,27 +1301,28 @@ const ChatRoomScreen = () => {
           )}
           loadEarlier={chatLoading}
           isLoadingEarlier={chatLoading}
-          onLongPress={(context, message)=>{
-          
-            const options = ['Delete Message', 'Cancel'];
+          onLongPress={(context, message) => {
+            const options = ["Delete Message", "Cancel"];
             const cancelButtonIndex = options.length - 1;
-            context.actionSheet().showActionSheetWithOptions({
+            context.actionSheet().showActionSheetWithOptions(
+              {
                 options,
-                cancelButtonIndex
-            }, (buttonIndex) => {
+                cancelButtonIndex,
+              },
+              (buttonIndex) => {
                 switch (buttonIndex) {
-                    case 0:
-                      // console.warn('deleting messages')
-                      setDeleteId(message._id)
-                      setshowPromptDelete(true)
-                      // deleteHandler(message._id)
-                      // console.log('deleting messages',message._id)
-                      
-                        // Your delete logic
-                        break;
-                      
+                  case 0:
+                    // console.warn('deleting messages')
+                    setDeleteId(message._id);
+                    setshowPromptDelete(true);
+                    // deleteHandler(message._id)
+                    // console.log('deleting messages',message._id)
+
+                    // Your delete logic
+                    break;
                 }
-            });
+              }
+            );
           }}
           // renderLoadEarlier={()=>{getMyChat}}
           renderBubble={renderBubble}

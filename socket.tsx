@@ -4,6 +4,7 @@ const io = require('socket.io-client');
 // const fs = require('fs');
 const SOCKET_URI = "http://192.168.29.82:8002/"
 
+
 const socket = io(SOCKET_URI,{
   transports:["polling", "websocket"]
 });
