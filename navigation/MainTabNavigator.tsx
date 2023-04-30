@@ -26,6 +26,7 @@ import Events from "../screens/Events";
 import SoapBox from "../screens/soapBox";
 import faceDetectScreen from "../screens/faceDetectScreen";
 import missingChildScreen from "../screens/MissingChild";
+import AttendenceMarker from "../screens/AttendanceMarker";
 // import Attendence from '../screens/Attendence';
 const MainTab = createMaterialTopTabNavigator<MainTabParamList>();
 
@@ -50,19 +51,9 @@ export default function MainTabNavigator() {
         showIcon: true,
       }}
     >
-      {/* <MainTab.Screen
-        name="Contacts"
-        component={ContactScreen}
-        options={{
-         
-        }}
-      /> */}
-      <MainTab.Screen name="Your Location" component={GeofenceScreen} />
-      {/* <MainTab.Screen
-        name="Manager"
-        component={ChatScreen}
-      
-      /> */}
+      <MainTab.Screen name="Attendace" component={GeofenceScreen} />
+      <MainTab.Screen name="Contacts" component={ContactScreen} />
+      <MainTab.Screen name="Chat" component={ChatScreen} />
       <MainTab.Screen name="Events" component={Events} />
       {/* <MainTab.Screen
         name="Profile Login"

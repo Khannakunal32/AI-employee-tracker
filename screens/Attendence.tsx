@@ -1,7 +1,5 @@
 import React from 'react'
 import { View,Text,Image, FlatList , StyleSheet} from 'react-native'
-import soapLogo from '../assets/images/soapLogo.png'
-import kali from '../assets/images/kali2.png'
 
 import {Camera} from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
@@ -11,14 +9,15 @@ import * as FaceDetector from 'expo-face-detector';
 import Colors from '../constants/Colors'
 
 export default function Attendence() {
-    const [hasPermission, setHasPermission] = React.useState();
+    const [hasPermission, setHasPermission] = React.useState(false);
 const [faceData, setFaceData] = React.useState([]);
  var torf = false;
 
 React.useEffect(() => {
     (async () => {
       const {status} = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === "granted");
+      // setHasPermission(status === "granted");
+      setHasPermission(true);
     })();
   }, []);
 
