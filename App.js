@@ -64,10 +64,11 @@ export default function App() {
             return <MaterialIcons name={iconName} size={size} color={color} />;
           },
         })}
-        screenOptions={{
-          activeTintColor: 'tomato',
-          inactiveTintColor: 'gray',
-        }}>
+        // screenOptions={{
+        //   activeTintColor: 'tomato',
+        //   inactiveTintColor: 'gray',
+        // }}
+        >
         <Tab.Screen name="Home" options={{headerShown:false }} component={HomeStack} />
         <Tab.Screen name="Analytics" component={Analytics} />
        
