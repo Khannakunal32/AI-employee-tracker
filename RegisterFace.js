@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Button } from "react-native";
 import { Camera } from "expo-camera";
+// import { FaceDetector } from "react-native-camera";
+import * as FaceDetector from "expo-face-detector";
 
-export default function AttendancePage() {
+export default function RegisterFacePage({user}) {
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.front);
   const [isAttendanceMarked, setIsAttendanceMarked] = useState(false);
   const [faceDetectedCam, faceDetectedCamEvent] = useState(false);
+  const [faceDetacted, setFaceDetacted] = useState(false);
+  const [faceDataStore, setFaceDataStore] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -30,6 +34,10 @@ export default function AttendancePage() {
     }
   };
 
+  const handelStoreFace = (data) => {
+    setFaceDataStore((prev) => [...prev, data]);
+  };
+  
   const registerFace = () => {
     if (faceDetacted) {
       let fdata = faceDataStore[faceDataStore.length - 1][0];
@@ -38,7 +46,7 @@ export default function AttendancePage() {
       console.log(body);
       setLoading(true);
       axios
-        .post(`${server_url}/BSA/attendance`, body)
+        .post(`${server_url}/BSA/registerFace`, body)
         .then((res) => {
           if (res.data.status) {
             setLoading(false);
@@ -49,12 +57,13 @@ export default function AttendancePage() {
         })
         .catch((err) => {
           setLoading(false);
-          alert(err || "Error | Could not mark attendence");
+          alert(err || "Error | Could not register");
         });
     } else {
       alert("Could not validate without face");
     }
   };
+
   if (hasPermission === null) {
     return <View />;
   }
@@ -94,7 +103,7 @@ export default function AttendancePage() {
         {isAttendanceMarked ? (
           <Text style={styles.attendanceMarked}>Attendance marked!</Text>
         ) : (
-          <Button title="Mark Attendance" onPress={markAttendance} />
+          <Button title="Register Face" onPress={registerFace} />
         )}
       </View>
       <View style={styles.buttonContainer}>

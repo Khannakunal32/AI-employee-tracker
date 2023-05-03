@@ -16,6 +16,7 @@ import PayrollPage from './PayRoll';
 import AttendanceForm from './Attendence';
 import SupportPage from './Support';
 import SignInSignUpPage from './Signin';
+import RegisterFacePage from './RegisterFace';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -33,6 +34,7 @@ function HomeStack() {
       <Stack.Screen name="Attendence" options={{ headerShown: false }} component={AttendanceForm} />
       <Stack.Screen name="Support" options={{ headerShown: false }} component={SupportPage} />
       <Stack.Screen name="Login"  options={{headerShown:false}} component={SignInSignUpPage} />
+      <Stack.Screen name="RegisterFace"  options={{headerShown:false}} component={RegisterFacePage} />
     </Stack.Navigator>
   );
 }
