@@ -3,14 +3,23 @@ import { StyleSheet, Text, View, TouchableOpacity, Button } from "react-native";
 import { Camera } from "expo-camera";
 // import { FaceDetector } from "react-native-camera";
 import * as FaceDetector from "expo-face-detector";
+import axios from "axios";
+import AttendancePage from "./Attendence";
+import { useNavigation } from "@react-navigation/native";
 
-export default function RegisterFacePage({user}) {
+export default function RegisterFacePage(props) {
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.front);
   const [isAttendanceMarked, setIsAttendanceMarked] = useState(false);
   const [faceDetectedCam, faceDetectedCamEvent] = useState(false);
   const [faceDetacted, setFaceDetacted] = useState(false);
   const [faceDataStore, setFaceDataStore] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const server_url = process.env.REACT_APP_URL || "https://api.pecunovus.net";
+  const { user } = props;
+  const navigation = useNavigation();
+  var dataOfUser = user;
+  userEmail = JSON.stringify(user);
 
   useEffect(() => {
     (async () => {
@@ -26,39 +35,45 @@ export default function RegisterFacePage({user}) {
 
   const faceDetectedHandler = (e) => {
     if (e.faces && e.faces.length > 0) {
-      faceDetectedCamEvent({ available: true, data: e.faces });
+      //   faceDetectedCamEvent({ available: true, data: e.faces });
+      //   setFaceDataStore((prev) => [...prev, data]);
+      setFaceDataStore((prev) => [...prev, e.faces]);
       setFaceDetacted(true);
     } else {
-      faceDetectedCamEvent({ available: false, data: null });
+      // faceDetectedCamEvent({ available: false, data: null });
+      // setFaceDataStore((prev) => [...prev, data]);
       setFaceDetacted(false);
     }
+    setFaceDataStore((prev) => [...prev, e.faces]);
   };
 
-  const handelStoreFace = (data) => {
-    setFaceDataStore((prev) => [...prev, data]);
-  };
-  
+  //   const handelStoreFace = (data) => {
+  //     setFaceDataStore((prev) => [...prev, data]);
+  //   };
+
   const registerFace = () => {
     if (faceDetacted) {
       let fdata = faceDataStore[faceDataStore.length - 1][0];
-      console.log(JSON.stringify(fdata));
-      const body = { attendence: true, email: user.email, faceUser: fdata };
+      const body = { attendence: false, email: userEmail, faceUser: fdata };
       console.log(body);
-      setLoading(true);
+      //   setLoading(true);
       axios
         .post(`${server_url}/BSA/registerFace`, body)
         .then((res) => {
           if (res.data.status) {
-            setLoading(false);
+            // setLoading(false);
             setIsAttendanceMarked(true);
           } else {
             throw new Error(res.data.message);
           }
         })
         .catch((err) => {
-          setLoading(false);
+          //   setLoading(false);
           alert(err || "Error | Could not register");
         });
+      alert("Face registered");
+      // return <AttendancePage user={dataOfUser} />;
+      navigation.navigate("AttendencePage", { user: dataOfUser });
     } else {
       alert("Could not validate without face");
     }
@@ -86,25 +101,9 @@ export default function RegisterFacePage({user}) {
           minDetectionInterval: 100,
           tracking: true,
         }}
-      >
-        {/* <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => {
-            setType(
-              type === Camera.Constants.Type.back
-                ? Camera.Constants.Type.front
-                : Camera.Constants.Type.back
-            );
-          }}>
-            <Text style={styles.text}> Flip </Text>
-          </TouchableOpacity>
-        </View> */}
-      </Camera>
+      ></Camera>
       <View style={styles.buttonContainer}>
-        {isAttendanceMarked ? (
-          <Text style={styles.attendanceMarked}>Attendance marked!</Text>
-        ) : (
-          <Button title="Register Face" onPress={registerFace} />
-        )}
+        <Button title="Register Face" onPress={registerFace} />
       </View>
       <View style={styles.buttonContainer}>
         <Button

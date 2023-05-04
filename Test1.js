@@ -1,24 +1,29 @@
 import * as React from "react";
 import {
   StyleSheet,
+  AppState,
+  FlatList,
   View,
   Text,
+  AsyncStorage,
   TextInput,
+  ActivityIndicator,
   TouchableOpacity,
+  Button,
 } from "react-native";
 
 import axios from "axios";
-// import Colors from "../constants/Colors";
 import * as Notifications from "expo-notifications";
 
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { Image, KeyboardAvoidingView } from "react-native";
-// import CameraApp from "./Camera";
+// import io from "socket.io-client";
+import CameraApp from "./test2";
+// import Camera from "./camera.";
+// import socket, { startSocket } from "./socketUrl";
 import { ScrollView } from "react-native-gesture-handler";
-import HomeScreen from "./HomeScreen";
-import { useNavigation } from "@react-navigation/native";
-import RegisterFacePage from "./RegisterFace";
+// import Colors from '../constants/Colors';'
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -28,10 +33,9 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export default function AuthenticationPage() {
-  // console.log(route);
-  const navigation = useNavigation();
-
+export default function TestOne({route}) {
+  console.log(route);
+  
   const [faceDataStore, setFaceDataStore] = useState([]);
   const [registerFaceView, setRegisterFaceView] = useState(false);
   const [sound, setSound] = useState();
@@ -49,9 +53,30 @@ export default function AuthenticationPage() {
   const [user, setUser] = useState(null);
   const [faceDetectedCam, setFaceDetacted] = useState(false);
   const server_url = process.env.REACT_APP_URL || "https://api.pecunovus.net";
-
-  const handleSumbit = () => {
-    navigation.navigate("HomeScreen");
+  const handlleSumbit = () => {
+    if (faceDetectedCam) {
+      let fdata = faceDataStore[faceDataStore.length - 1][0];
+      console.log(JSON.stringify(fdata));
+      const body = { attendence: true, email: user.email, faceUser: fdata };
+      console.log(body);
+      setLoading(true);
+      axios
+        .post(`${server_url}/BSA/attendance`, body)
+        .then((res) => {
+          if (res.data.status) {
+            setSuccess(true);
+            setLoading(false);
+          } else {
+            throw new Error(res.data.message);
+          }
+        })
+        .catch((err) => {
+          setLoading(false);
+          alert(err || "Error | Could not mark attendence");
+        });
+    } else {
+      alert("Could not validate without face");
+    }
   };
   const registerFaceHandler = () => {
     if (faceDetectedCam) {
@@ -95,9 +120,10 @@ export default function AuthenticationPage() {
     //     alert("Error | Could not mark attendence")
     // })
   };
+  
 
   const loginHandler = () => {
-        if (email === "admin" && password == 123456) {
+    if (email === "admin" && password == 123456) {
       setAuthenticated(true);
     } else {
       axios
@@ -107,26 +133,19 @@ export default function AuthenticationPage() {
         })
         .then((res) => {
           if (res.status && res.data) {
+            console.log(res.data);
             const { data } = res || {};
             const { message, loggedIn } = data || {};
             setUser(data);
 
             setAuthenticated(loggedIn);
-            alert(message);
             if (!res.data.isFaceAvailable) {
-              // setRegisterFaceView(true);
+              setRegisterFaceView(true);
               alert(
-                "Your face is not registered, \n" +
-                  "Please ask your admin to add your data."
-                  +user);
-
-                return (
-                  <RegisterFacePage 
-                    user={data}
-                  />
-                )
+                "Your face is not registered,Please ask your admin to add your data."
+              );
             } else {
-              navigation.naviagate("HomeScreen");
+              alert(message);
             }
           }
         })
@@ -149,21 +168,34 @@ export default function AuthenticationPage() {
           const { message, user } = data || {};
 
           alert(message);
-
           if (user) {
             setUser(user);
-            alert("Moving to face registration");
-            loginHandler();
+            setAuthenticated(true);
           }
         }
       })
       .catch((err) => console.log(err));
   };
 
+  const handelStoreFace = (data) => {
+    setFaceDataStore((prev) => [...prev, data]);
+  };
+
+  useEffect(() => {
+    if (authenticated) {
+      if (faceDetectedCam) {
+        // playSound();
+      } else {
+        // playSoundError();
+      }
+    }
+  }, [faceDetectedCam]);
+
   if (!authenticated) {
     return (
       <ScrollView style={{ backgroundColor: "white" }}>
         <View style={styles.container}>
+          {/* <StatusBar style="auto" backgroundColor="pink" /> */}
           <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={{
@@ -372,12 +404,51 @@ export default function AuthenticationPage() {
             </View>
           </TouchableOpacity>
         </View>
-      ) : (<>
-        {/* <Text>Hello</Text> */}
-        <RegisterFacePage />
-      </>
-      )
-      }
+      ) : (
+        <View>
+          <View style={styles.carbox}>
+            <CameraApp
+              registerFaceView={registerFaceView}
+              faceDetectedCamEvent={(e) => {
+                handelStoreFace(e.data);
+                setFaceDetacted(e.available);
+              }}
+              user={user}
+              loading={loading}
+              success={success}
+            />
+          </View>
+          {registerFaceView ? (
+            <TouchableOpacity
+              onPress={() => {
+                registerFaceView ? registerFaceHandler() : handlleSumbit();
+              }}
+            >
+              <View style={styles.submit}>
+                <Text
+                  style={{ color: "white", fontWeight: "bold", fontSize: 19 }}
+                >
+                  Register Face
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              onPress={() => {
+                handlleSumbit();
+              }}
+            >
+              <View style={styles.submit}>
+                <Text
+                  style={{ color: "white", fontWeight: "bold", fontSize: 19 }}
+                >
+                  Mark Attendence
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )}
+        </View>
+      )}
     </View>
   );
 }

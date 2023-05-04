@@ -17,6 +17,9 @@ import AttendanceForm from './Attendence';
 import SupportPage from './Support';
 import SignInSignUpPage from './Signin';
 import RegisterFacePage from './RegisterFace';
+import TestOne from './Test1';
+import TestTwo from './test2';
+import AttendencePage from './Attendence';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -31,7 +34,7 @@ function HomeStack() {
       />
       <Stack.Screen name="ProductDetails" options={{ headerShown: false }} component={ProductDetailScreen} />
       <Stack.Screen name="PayRoll" options={{ headerShown: false }} component={PayrollPage} />
-      <Stack.Screen name="Attendence" options={{ headerShown: false }} component={AttendanceForm} />
+      <Stack.Screen name="AttendencePage" options={{ headerShown: false }} component={AttendencePage} />
       <Stack.Screen name="Support" options={{ headerShown: false }} component={SupportPage} />
       <Stack.Screen name="Login"  options={{headerShown:false}} component={SignInSignUpPage} />
       <Stack.Screen name="RegisterFace"  options={{headerShown:false}} component={RegisterFacePage} />

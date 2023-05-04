@@ -83,11 +83,14 @@ const popularProducts = [
     }
   ];
   
-const HomeScreen = () => {
+const HomeScreen = (props) => {
+  const {user} = props;
+  userName = JSON.stringify(user);
   return (
       <ScrollView style={styles.container}>
           <Header />
           <SearchBar onSearch={(e)=>{console.log(e)}} />
+    <Text>Hello {userName}</Text>
     <View style={styles.banner}>
      <HeaderBanner images={headerBanners} />
     </View>

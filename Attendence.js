@@ -1,12 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Button } from "react-native";
 import { Camera } from "expo-camera";
+// import { FaceDetector } from "react-native-camera";
+import * as FaceDetector from "expo-face-detector";
+import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 
-export default function AttendancePage() {
+export default function AttendencePage(props) {
+  const { user } = props;
+  userEmail = JSON.stringify(user);
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.front);
   const [isAttendanceMarked, setIsAttendanceMarked] = useState(false);
   const [faceDetectedCam, faceDetectedCamEvent] = useState(false);
+  const [faceDetacted, setFaceDetacted] = useState(false);
+  const [faceDataStore, setFaceDataStore] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const server_url = process.env.REACT_APP_URL || "https://api.pecunovus.net";
+  const navigation = useNavigation();
 
   useEffect(() => {
     (async () => {
@@ -22,19 +33,21 @@ export default function AttendancePage() {
 
   const faceDetectedHandler = (e) => {
     if (e.faces && e.faces.length > 0) {
-      faceDetectedCamEvent({ available: true, data: e.faces });
+      //   faceDetectedCamEvent({ available: true, data: e.faces });
+      //   setFaceDataStore((prev) => [...prev, data]);
+      setFaceDataStore((prev) => [...prev, e.faces]);
       setFaceDetacted(true);
     } else {
-      faceDetectedCamEvent({ available: false, data: null });
+      // faceDetectedCamEvent({ available: false, data: null });
+      // setFaceDataStore((prev) => [...prev, data]);
       setFaceDetacted(false);
     }
   };
 
-  const registerFace = () => {
+  const markAttendance = () => {
     if (faceDetacted) {
       let fdata = faceDataStore[faceDataStore.length - 1][0];
-      console.log(JSON.stringify(fdata));
-      const body = { attendence: true, email: user.email, faceUser: fdata };
+      const body = { attendence: false, email: userEmail, faceUser: fdata };
       console.log(body);
       setLoading(true);
       axios
@@ -51,10 +64,15 @@ export default function AttendancePage() {
           setLoading(false);
           alert(err || "Error | Could not mark attendence");
         });
+      alert("Attendance marked!");
+      console.log(JSON.stringify(user))
+      navigation.navigate("HomeScreen", { user: user });
+      // return <RegisterFacePage user={user} />;
     } else {
       alert("Could not validate without face");
     }
   };
+
   if (hasPermission === null) {
     return <View />;
   }
@@ -77,19 +95,7 @@ export default function AttendancePage() {
           minDetectionInterval: 100,
           tracking: true,
         }}
-      >
-        {/* <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => {
-            setType(
-              type === Camera.Constants.Type.back
-                ? Camera.Constants.Type.front
-                : Camera.Constants.Type.back
-            );
-          }}>
-            <Text style={styles.text}> Flip </Text>
-          </TouchableOpacity>
-        </View> */}
-      </Camera>
+      ></Camera>
       <View style={styles.buttonContainer}>
         {isAttendanceMarked ? (
           <Text style={styles.attendanceMarked}>Attendance marked!</Text>
