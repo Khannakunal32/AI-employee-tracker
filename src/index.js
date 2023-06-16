@@ -66,6 +66,6 @@ const AiChatBot = () => {
       <Text>AiChatBot</Text>
     </View>
   )
-}
+
 
 export default AiChatBot
