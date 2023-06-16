@@ -35,8 +35,32 @@ const AiChatBot = () => {
             }
 
             // if the message contains work-related keyword, fetch a response fromt he api and respond
-        }
-    }
+            const response = await axios.post('https://api.openai.com/v1/engines/text-davinci-003/completions', {
+                prompt: `Work related ${messageText}`,
+                max_tokens: 150,
+                temperature: 0.2,
+                n: 1,
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${gptKey}`
+            }
+        });
+        const workResponse = repsonse.data.choices[0].text.trim();
+        const gptMessage = {
+            _id: new Date().getTime() + 1,
+            text: workResponse,
+            createdAt: new Date(),
+            user: {
+                _id: 2,
+                name: 'AI Chatbot'
+            }   
+        };
+
+        setMessages(previousMessages => GiftedChat.append(previousMessages, gptMessage));
+    } catch (error) {
+        console.log(error);
+    };
   return (
     <View>
       <Text>AiChatBot</Text>
