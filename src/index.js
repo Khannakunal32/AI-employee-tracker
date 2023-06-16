@@ -46,6 +46,7 @@ const AiChatBot = () => {
                 'Authorization': `Bearer ${gptKey}`
             }
         });
+        console.log(response.data)
         const workResponse = repsonse.data.choices[0].text.trim();
         const gptMessage = {
             _id: new Date().getTime() + 1,
@@ -58,14 +59,16 @@ const AiChatBot = () => {
         };
 
         setMessages(previousMessages => GiftedChat.append(previousMessages, gptMessage));
-    } catch (error) {
-        console.log(error);
-    };
+        } catch (error) {
+            console.log(error);
+        };
+    }
+
   return (
     <View>
       <Text>AiChatBot</Text>
     </View>
   )
 
-
+}
 export default AiChatBot
