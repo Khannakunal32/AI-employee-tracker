@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, ScrollView, Image } from 'react-native';
+import ChatPopup from './chatBot';
 import Header from './Header';
 import HeaderBanner from './HeaderBanner';
 import OfferArea from './OfferArea';
@@ -102,7 +103,6 @@ const HomeScreen = () => {
     <View style={styles.productsContainer}>
   
     </View>
-
 
   </ScrollView>
 

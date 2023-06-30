@@ -1,0 +1,246 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { View, TextInput, Text, TouchableOpacity, StyleSheet, FlatList, KeyboardAvoidingView } from 'react-native';
+
+const ChatScreen = () => {
+  const [messages, setMessages] = useState([]);
+  const [inputMessage, setInputMessage] = useState('');
+  const flatListRef = useRef(null);
+
+  const handleSendMessage = () => {
+    if (inputMessage.trim() === '') return;
+
+    const newMessage = {
+      id: Math.random().toString(),
+      text: inputMessage,
+      sender: 'user',
+    };
+
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+    setInputMessage('');
+    // Process the user's message and generate a response
+    setTimeout(() => {
+      const replyMessage = {
+        id: Math.random().toString(),
+        text: generateReply(inputMessage),
+        sender: 'bot',
+      };
+      setMessages((prevMessages) => [...prevMessages, replyMessage]);
+    }, 1000);
+  };
+
+  function generateReply(message) {
+    const lowerCaseMessage = message.toLowerCase();
+  
+    const commonWords = [
+      'hello',
+      'hi',
+      'how are you',
+      'goodbye',
+      'record attendance',
+      'mark absence',
+      'generate attendance report',
+      'view attendance history',
+      'late arrivals',
+      'early departures',
+      'automatic reminders',
+      'overtime hours',
+      'add new employee',
+      'edit employee information',
+      'handle leaves',
+      'manage public holidays',
+      'calculate working hours',
+      'approve leave requests',
+      'attendance categories',
+      'generate payroll report',
+      'export attendance data',
+      'biometric device integration',
+      'half-day leaves',
+      'different shift patterns',
+      'manage employee shifts',
+      'attendance corrections',
+      'generate department reports',
+      'track breaks and meal times',
+      'overtime pay rates',
+      'employee transfers',
+      'employee work schedules',
+      'attendance disputes',
+      'deduct salary for absences',
+      'employee resignations',
+      'employee terminations',
+      'mobile app integration',
+      'generate monthly summary',
+      'attendance alerts',
+      'approve timesheets',
+      'calculate employee wages',
+      'shift swaps',
+      'employee location transfers',
+      'leave types',
+      'attendance data backups',
+      'assign supervisors',
+      'frequent absences report',
+      'time off during peak periods',
+      'attendance trends',
+      'generate payroll summary',
+      'automatic overtime calculation',
+        'clock-in/out errors',
+      'about you'
+    ];
+  
+    const replies = [
+      'Hi! How can I assist you?',
+      'Hi there!',
+      "I'm doing well, thank you!",
+      'Goodbye! Have a great day!',
+      'To record attendance, go to the Attendance section and select the current date.',
+      'To mark an absence, go to the Attendance section and select the employee with the corresponding date.',
+      'To generate an attendance report, navigate to the Reports tab and select the desired month.',
+      'To view an employee\'s attendance history, go to the Employee Profile and click on the Attendance tab.',
+      'To track late arrivals, you can enable the Late Arrival feature in the system settings.',
+      'To track early departures, you can enable the Early Departure feature in the system settings.',
+      'Yes, you can set up automatic reminders for employees to mark their attendance through the Notifications section.',
+      'To handle overtime hours, go to the Attendance section and select the employee with the corresponding date. Enter the overtime hours in the designated field.',
+      'To add a new employee, go to the Employees section and click on the Add New Employee button.',
+      'To edit an employee\'s personal information, go to the Employee Profile and make the necessary changes.',
+      'To handle leaves, go to the Leaves section and select the employee with the corresponding leave type and date range.',
+      'To manage public holidays, go to the Public Holidays section and add/edit the holidays according to your company policy.',
+      'To calculate total working hours for an employee, the system automatically tracks the clock-in and clock-out times.',
+      'To approve or reject leave requests, go to the Leave Requests section and review each request individually.',
+      'To customize attendance categories, go to the Attendance Categories section and add/edit the categories according to your company policy.',
+      'To generate a payroll report, go to the Payroll section and select the desired month.',
+      'To export attendance data, navigate to the Reports tab and select the export format (e.g., Excel or PDF).',
+      'Yes, it is possible to integrate the attendance system with biometric devices. Please refer to the integration documentation for the specific device.',
+      'To handle half-day leaves, go to the Leaves section and select the employee with the corresponding leave type and duration.',
+      'To set up different shift patterns, go to the Shift Patterns section and create the desired patterns.',
+      'To manage employee shifts, go to the Shift Management section and assign shifts to employees based on their schedules.',
+      'To make attendance corrections, go to the Attendance Corrections section and provide the necessary details.',
+      'To generate department reports, go to the Reports tab and select the desired department for the report.',
+      'To track breaks and meal times, you can enable the Break Tracking feature in the system settings.',
+      'To handle overtime pay rates, go to the Overtime Pay Rates section and configure the rates according to your company policy.',
+      'To handle employee transfers, go to the Employee Transfers section and follow the transfer process.',
+      'To set up employee work schedules, go to the Work Schedules section and assign schedules to employees.',
+      'To handle attendance disputes, go to the Attendance Disputes section and follow the dispute resolution process.',
+      'To deduct salary for unauthorized absences, you can enable the Deduction feature in the system settings.',
+      'To handle employee resignations, go to the Employee Resignations section and follow the resignation process.',
+      'To handle employee terminations, go to the Employee Terminations section and follow the termination process.',
+      'Yes, the attendance system can be integrated with a mobile app for employees to mark their attendance.',
+      'To generate a monthly attendance summary for all employees, go to the Reports tab and select the desired month and summary type.',
+      'Yes, you can set up attendance alerts for low attendance or excessive overtime in the system settings.',
+      'To approve employee timesheets, go to the Timesheets section and review each timesheet individually.',
+      'To calculate employee wages based on their attendance, go to the Payroll section and configure the wage calculation rules.',
+      'To manage shift swaps between employees, go to the Shift Swaps section and follow the swap process.',
+      'To handle employee transfers between locations, go to the Employee Transfers section and follow the transfer process.',
+      'To set up different leave types, go to the Leave Types section and add/edit the types according to your company policy.',
+      'To handle attendance data backups, you can enable the Data Backup feature in the system settings.',
+      'To assign supervisors for employees, go to the Employee Profiles and assign supervisors in the designated field.',
+      'To generate a report for employees with frequent absences, go to the Reports tab and select the Frequent Absences report.',
+      'To handle time off requests during peak business periods, you can enable the Peak Business Period feature in the system settings.',
+      'To track attendance trends or patterns, go to the Reports tab and select the desired report for analysis.',
+      'To generate a payroll summary for all employees, go to the Payroll section and select the summary type (e.g., monthly or yearly).',
+      'Yes, the system can calculate overtime automatically based on the configured rules in the system settings.',
+        'To handle clock-in/out errors, go to the Attendance Corrections section and provide the necessary details for correction.',
+      `This project has been developed at BPIT under the esteemed supervision and guidance of Ms. Preeti Arora. We would like to express our sincere gratitude to Ms. Preeti Arora for her invaluable support, expertise, and guidance throughout the development process. Her mentorship has been instrumental in the successful completion of this project. We extend our heartfelt thanks to Ms. Preeti Arora for her continuous encouragement and insightful feedback, which have greatly contributed to the quality and success of this project.
+      `
+    ];
+  
+    const questionIndex = commonWords.findIndex((word) => lowerCaseMessage.includes(word)|| word.includes(lowerCaseMessage));
+  
+    if (questionIndex !== -1) {
+      return replies[questionIndex];
+    } else {
+      return "I'm sorry, i m not able to answer you this question.I'm still learning to talk like a human😢";
+    }
+  }
+  
+
+  const renderMessage = ({ item }) => {
+    const messageStyle =
+      item.sender === 'user' ? styles.userMessage : styles.botMessage;
+    return (
+      <View style={[styles.messageContainer, messageStyle]}>
+        <Text style={styles.messageText}>{item.text}</Text>
+      </View>
+    );
+  };
+
+    return (
+     
+    <View style={styles.container}>
+      <FlatList
+        ref={flatListRef}
+        data={messages.slice().reverse()} // Reverse the order of the messages array
+        renderItem={renderMessage}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.chatContainer}
+        inverted
+      />
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Type a message..."
+          value={inputMessage}
+          onChangeText={setInputMessage}
+        />
+        <TouchableOpacity style={styles.sendButton} onPress={handleSendMessage}>
+          <Text style={styles.sendButtonText}>Send</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#f5f5f5',
+  },
+  chatContainer: {
+    flexGrow: 1,
+    justifyContent: 'flex-end',
+  },
+  messageContainer: {
+    maxWidth: '80%',
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 8,
+  },
+  userMessage: {
+    backgroundColor: '#2196F3',
+    alignSelf: 'flex-end',
+  },
+  botMessage: {
+    backgroundColor: 'grey',
+    alignSelf: 'flex-start',
+  },
+  messageText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 16,
+  },
+  input: {
+    flex: 1,
+    height: 40,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    marginRight: 8,
+  },
+  sendButton: {
+    backgroundColor: '#2196F3',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  sendButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});
+
+export default ChatScreen;

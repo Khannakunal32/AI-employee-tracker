@@ -246,7 +246,7 @@ export default function AttendancePage() {
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{ width: '100%', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-        <View style={{ margin: 50 }}><Text style={{ color: 'tomato', fontWeight: 'bold', fontSize: 19 }}>BPIT SMART ATTENDENCE</Text>
+        <View style={{ margin: 50 }}><Text style={{ color: 'tomato', fontWeight: 'bold', fontSize: 19 }}>BPIT SMART ATTENDENCEs</Text>
           <Text style={{ color: 'blue', fontWeight: '700', fontSize: 12 }}>Powered by A.I.</Text>
         </View>
         <Image source={require('./assets/login.jpeg')} style={{ width: 150, height: 150 }} />

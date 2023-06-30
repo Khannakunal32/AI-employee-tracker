@@ -141,22 +141,22 @@ export default function GeofenceCheckScreen() {
         //   notifyOnEnter: true,
         //   notifyOnExit: true,
         // },
-        {
-          identifier: "HOME",
-          latitude: 28.705564,
-          longitude: 77.1206821,
-          radius: 100,
-          notifyOnEnter: true,
-          notifyOnExit: true,
-        },
         // {
-        //   identifier: "COLLEGE",
-        //   latitude: 28.7370735,
-        //   longitude: 77.1129645,
+        //   identifier: "HOME",
+        //   latitude: 28.705564,
+        //   longitude: 77.1206821,
         //   radius: 100,
         //   notifyOnEnter: true,
         //   notifyOnExit: true,
-        // }
+        // },
+        {
+          identifier: "COLLEGE",
+          latitude: 28.7370735,
+          longitude: 77.1129645,
+          radius: 1000,
+          notifyOnEnter: true,
+          notifyOnExit: true,
+        }
       ];
       await Location.startGeofencingAsync("GEOFENCE_TASK", geofences);
     })();
@@ -184,7 +184,7 @@ export default function GeofenceCheckScreen() {
       {isLoading ? (
         <Text>App is Loading...</Text>
       ) : (
-        <Text>Welcome to Bractance</Text>
+        <Text>Welcome to BPIT</Text>
       )}
       <Text>{msg}</Text>
       <Text>{locationStatus}</Text>

@@ -6,33 +6,32 @@ import { PieChart } from 'react-native-svg-charts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 const Analytics = () => {
-  // const attendanceData = [
-  //   { date: '2022-01-01', value: 12 },
-  //   { date: '2022-01-02', value: 16 },
-  //   { date: '2022-01-03', value: 20 },
-  //   { date: '2022-01-04', value: 14 },
-  //   { date: '2022-01-05', value: 18 },
-  //   { date: '2022-01-06', value: 22 },
-  //   { date: '2022-01-07', value: 26 },
-  //   // Add more data here
-  // ];
-  const server_url = process.env.REACT_APP_URL||"https://api.pecunovus.net";
-  const [user, setUser] = useState();
-  const [attendenceData,setAttendenceData]=useState([
+  const attendanceDataArea = [
     {
-      "date": "2023-06-01",
+      "date": "2023-06-30",
       "attendance": 85
     },
     {
-      "date": "2023-06-02",
+      "date": "2023-06-29",
       "attendance": 90
     },
     {
-      "date": "2023-06-03",
+      "date": "2023-06-28",
+      "attendance": 80
+    },
+    {
+      "date": "2023-06-27",
+      "attendance": 90
+    },
+    {
+      "date": "2023-06-26",
       "attendance": 80
     },
     
-  ])
+  ]
+  const server_url = process.env.REACT_APP_URL||"https://api.pecunovus.net";
+  const [user, setUser] = useState();
+  const [attendenceData,setAttendenceData]=useState([])
   const contentInset = { top: 20, bottom: 20 };
  
   const AreaChartExample = ({ attendenceData }) => {
@@ -76,7 +75,7 @@ const Analytics = () => {
       setAttendenceData(res.data)
     }).catch(err=>console.log(err))
   }
-  useEffect(async() => {
+  const handleData= async() => {
     const userData = await AsyncStorage.getItem('user');
     console.log(userData)
     
@@ -88,6 +87,9 @@ const Analytics = () => {
         }
        
      }
+  }
+  useEffect(()=>{
+    handleData()
   }
  ,[])
 
@@ -136,7 +138,7 @@ const Analytics = () => {
     <ScrollView style={{ flex: 1, padding: 20 }}>
       <Text style={{ fontSize: 14, fontWeight: 'bold', margin: 20 }}>Weekly Report</Text>
       <PieChartExample attendenceData={attendenceData} />
-      <AreaChartExample attendenceData={attendenceData} />
+      <AreaChartExample attendenceData={attendanceDataArea} />
     
      
     </ScrollView>:<View><Text style={{ fontSize: 24, fontWeight: 'bold', margin: 20 }}>Not Logged in</Text></View>

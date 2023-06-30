@@ -10,6 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import GeofenceCheckScreen from "./GeofenceCheckScreen";
 import Signinscreen from "./Signinscreen2";
+import AttendanceForm from "./Attendence";
 
 // const Stackk= createStackNavigator();
 const Stack = createNativeStackNavigator();
@@ -25,10 +26,12 @@ export default function GeofenceScreen() {
         name="GeofenceCheckScreen"
         component={GeofenceCheckScreen}
       ></Stack.Screen>
-      <Stack.Screen
-        name="Signinscreen"
-        component={Signinscreen}
-      ></Stack.Screen>
+      <Stack.Screen name="Signinscreen" component={Signinscreen}></Stack.Screen>
+      {/* <Stack.Screen
+        name="Attendence"
+        options={{ headerShown: false }}
+        component={AttendanceForm}
+      /> */}
     </Stack.Navigator>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity,Linking } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 
 LocaleConfig.locales['en'] = {
@@ -46,7 +46,7 @@ LocaleConfig.defaultLocale = 'en';
 
 const Payroll = () => {
     const [totalLeaves, setTotalLeaves] = useState(20);
-    const [leavesTaken, setLeavesTaken] = useState(5);
+    const [leavesTaken, setLeavesTaken] = useState(0);
     const [currentEarnings, setCurrentEarnings] = useState(40000);
     const [balanceLeave, setBalanceLeave] = useState(totalLeaves - leavesTaken);
 
@@ -61,6 +61,14 @@ const Payroll = () => {
         '2022-05-19': { selected: true, marked: true },
         '2022-05-20': { selected: true, marked: true },
     };
+    const openEmailApp = async () => {
+      const templateMessage = 'Dear Manager,\n\nI would like to apply for leave from [start date] to [end date].\n\nThank you.\n\nSincerely, [Your Name]';
+      const emailUrl = `mailto:manager@example.com?subject=Leave Application&body=${encodeURIComponent(templateMessage)}`;
+      Linking.openURL('mailto:manager@example.com');
+      
+    };
+    
+  
 
     return (
         <View style={styles.container}>
@@ -75,7 +83,7 @@ const Payroll = () => {
                     <Text style={styles.statLabel}>Leaves Taken</Text>
                 </View>
                 <View style={styles.stat}>
-                    <Text style={styles.statValue}>{`$${currentEarnings}`}</Text>
+                    <Text style={styles.statValue}>{`${currentEarnings}`}</Text>
                     <Text style={styles.statLabel}>Current Earnings</Text>
                 </View>
                 <View style={styles.stat}>
@@ -96,7 +104,10 @@ const Payroll = () => {
                     }}
                     markingType="period"
                     style={styles.calendar}
-                />
+          />
+           <TouchableOpacity style={styles.applyButton} onPress={openEmailApp}>
+        <Text style={styles.applyButtonText}>Apply Leave</Text>
+      </TouchableOpacity>
                 {/* {selectedDate !== '' && (
                     <View style={styles.detailsContainer}>
                         <Text style={styles.date}>{selectedDate}</Text>
@@ -188,7 +199,20 @@ const styles = StyleSheet.create({
     detailValue: {
       fontSize: 16,
       fontWeight: 'bold',
-    },
+  },
+  applyButton: {
+    marginTop: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: '#2196F3',
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  applyButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   });
   
 export default Payroll
