@@ -5,16 +5,16 @@ FaceZone is a React Native app built with Expo that utilizes geofence security a
 ## Screenshots
 
 <div style="display: flex; justify-content: center;">
-    <img src="https://drive.google.com/uc?export=view&id=1PXHheTowgZjDBt2EZxuP5y1uh0cRQpzu" alt="Screenshot 1" style="padding: 15px; width: 200px; height: 400px;">
-    <img src="https://drive.google.com/uc?export=view&id=1wCfS7Gjf_YxUJ8YjcvLehNbyA_6oIBXW" alt="Screenshot 1" style="padding: 15px; width: 200px; height: 400px;">
+    <img src="https://drive.google.com/uc?export=view&id=1PXHheTowgZjDBt2EZxuP5y1uh0cRQpzu" alt="refresh if not loaded" style="padding: 15px; width: 200px; height: 400px;">
+    <img src="https://drive.google.com/uc?export=view&id=1wCfS7Gjf_YxUJ8YjcvLehNbyA_6oIBXW" alt="refresh if not loaded" style="padding: 15px; width: 200px; height: 400px;">
 </div>
 <div style="display: flex; justify-content: center;">
-    <img src="https://drive.google.com/uc?export=view&id=15pgDft34XbtldgVUI0ND_DUSf2ILKyRl" alt="Screenshot 3" style="padding: 15px; width: 200px; height: 400px;">
-    <img src="https://drive.google.com/uc?export=view&id=1K58kGfNHUZxtsi_5SMfugWtMci4Wp4oC" style="padding: 15px; width: 200px; height: 400px;">
+    <img src="https://drive.google.com/uc?export=view&id=15pgDft34XbtldgVUI0ND_DUSf2ILKyRl" alt="refresh if not loaded" style="padding: 15px; width: 200px; height: 400px;">
+    <img src="https://drive.google.com/uc?export=view&id=1K58kGfNHUZxtsi_5SMfugWtMci4Wp4oC" alt="refresh if not loaded" style="padding: 15px; width: 200px; height: 400px;">
 </div>
 <div style="display: flex; justify-content: center;">
-    <img src="https://drive.google.com/uc?export=view&id=1JiMYwq0lBm1Tgsz23Fs7jhvTEtQ_KMRp" alt="Screenshot 5" style="padding: 15px; width: 200px; height: 400px;">
-    <img src="https://drive.google.com/uc?export=view&id=1EnSr3NJYFfX2_4mANN5cJcT7z4hjG3uN" style="padding: 15px; width: 200px; height: 400px;">
+    <img src="https://drive.google.com/uc?export=view&id=1JiMYwq0lBm1Tgsz23Fs7jhvTEtQ_KMRp" alt="refresh if not loaded" style="padding: 15px; width: 200px; height: 400px;">
+    <img src="https://drive.google.com/uc?export=view&id=1EnSr3NJYFfX2_4mANN5cJcT7z4hjG3uN" alt="refresh if not loaded" style="padding: 15px; width: 200px; height: 400px;">
 </div>
 
 ## Features
